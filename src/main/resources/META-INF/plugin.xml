@@ -5,6 +5,8 @@
     <vendor>pichlermathias</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.xml</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
@@ -18,5 +20,8 @@
                 implementation="marchvalidation.dom.MarchFileDescription"
                 rootTagName="march"
                 stubVersion="2"/>
+        <annotator
+                language="XML"
+                implementationClass="marchvalidation.dom.annotators.DimensionDuplicateAnnotator"/>
     </extensions>
 </idea-plugin>
