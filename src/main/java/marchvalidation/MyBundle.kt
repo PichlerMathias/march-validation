@@ -1,4 +1,4 @@
-package com.github.pichlermathias.marchvalidation
+package marchvalidation
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls

@@ -1,4 +1,4 @@
-package com.github.pichlermathias.marchvalidation.startup
+package marchvalidation.startup
 
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project

@@ -1,0 +1,14 @@
+package marchvalidation.dom;
+
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.GenericDomValue;
+import com.intellij.util.xml.SubTag;
+
+/** Maps to RootDto */
+public interface Root extends DomElement {
+    GenericDomValue<String> getGroupId();
+    GenericDomValue<String> getArtifactId();
+
+    @SubTag("modularity")
+    Modularity getModularity();
+}

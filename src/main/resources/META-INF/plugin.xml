@@ -9,7 +9,14 @@
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.pichlermathias.marchvalidation.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.pichlermathias.marchvalidation.startup.MyProjectActivity" />
+        <toolWindow factoryClass="marchvalidation.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <postStartupActivity implementation="marchvalidation.startup.MyProjectActivity" />
+        <standardResource
+                path="march-config.xsd"
+                url="/schemas/march-config.xsd"/>
+        <dom.fileMetaData
+                implementation="marchvalidation.dom.MarchFileDescription"
+                rootTagName="march"
+                stubVersion="2"/>
     </extensions>
 </idea-plugin>

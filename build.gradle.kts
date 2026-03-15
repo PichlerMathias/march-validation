@@ -3,7 +3,8 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
-    id("java") // Java support
+    id("java")
+    id("checkstyle")
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
@@ -21,6 +22,7 @@ kotlin {
 
 // Configure project's dependencies
 repositories {
+    mavenLocal()
     mavenCentral()
 
     // IntelliJ Platform Gradle Plugin Repositories Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-repositories-extension.html
@@ -31,6 +33,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/version_catalogs.html
 dependencies {
+    implementation("at.marchframework:march-maven-plugin:1.0-SNAPSHOT")
     testImplementation(libs.junit)
     testImplementation(libs.opentest4j)
 
@@ -156,4 +159,11 @@ intellijPlatformTesting {
             }
         }
     }
+}
+
+checkstyle {
+    toolVersion = "10.12.5"
+    configFile = file("${project.rootDir}/checkstyle.xml")
+    isIgnoreFailures = false
+    maxWarnings = 0
 }
