@@ -1,0 +1,40 @@
+package marchvalidation.dom.annotators;
+
+import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.Annotator;
+import com.intellij.lang.annotation.HighlightSeverity;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.xml.XmlTag;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class DimensionDuplicateAnnotator implements Annotator {@Override
+public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
+    // Look for the <dimensions> container
+    if (!(element instanceof XmlTag parentTag) || !"dimensions".equals(parentTag.getName())) {
+        return;
+    }
+
+    XmlTag[] dimensionTags = parentTag.findSubTags("dimension");
+    Set<String> seenNames = new HashSet<>();
+
+    for (XmlTag dimension : dimensionTags) {
+        XmlTag nameTag = dimension.findFirstSubTag("name");
+        if (nameTag == null) continue;
+
+        String nameValue = nameTag.getValue().getTrimmedText();
+        if (nameValue.isEmpty()) continue;
+
+        if (seenNames.contains(nameValue)) {
+            // Highlighting the specific name tag as an error
+            holder.newAnnotation(HighlightSeverity.ERROR, "Duplicate dimension: " + nameValue)
+                    .range(nameTag.getTextRange())
+                    .create();
+        } else {
+            seenNames.add(nameValue);
+        }
+    }
+}
+}
