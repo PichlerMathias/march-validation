@@ -23,5 +23,8 @@
         <annotator
                 language="XML"
                 implementationClass="marchvalidation.dom.annotators.DimensionDuplicateAnnotator"/>
+        <annotator
+                language="XML"
+                implementationClass="marchvalidation.dom.annotators.PartitionsAnnotator"/>
     </extensions>
 </idea-plugin>
