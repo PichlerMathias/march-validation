@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DimensionDuplicateAnnotator implements Annotator {
+public class DimensionsAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
         if (!(element instanceof XmlTag parentTag) || !"dimensions".equals(parentTag.getName())) {
@@ -25,8 +25,16 @@ public class DimensionDuplicateAnnotator implements Annotator {
             if (nameTag == null) continue;
 
             String nameValue = nameTag.getValue().getTrimmedText();
-            if (nameValue.isEmpty()) continue;
 
+            // Check if the dimension name is empty
+            if (nameValue.isEmpty()) {
+                holder.newAnnotation(HighlightSeverity.ERROR, "Dimension name cannot be empty")
+                        .range(nameTag.getTextRange())
+                        .create();
+                continue;
+            }
+
+            // Check for duplicate dimension names
             if (seenNames.contains(nameValue)) {
                 holder.newAnnotation(HighlightSeverity.ERROR, "Duplicate dimension: " + nameValue)
                         .range(nameTag.getTextRange())

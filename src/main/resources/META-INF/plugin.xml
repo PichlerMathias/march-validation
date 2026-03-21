@@ -22,7 +22,7 @@
                 stubVersion="2"/>
         <annotator
                 language="XML"
-                implementationClass="marchvalidation.dom.annotators.DimensionDuplicateAnnotator"/>
+                implementationClass="marchvalidation.dom.annotators.DimensionsAnnotator"/>
         <annotator
                 language="XML"
                 implementationClass="marchvalidation.dom.annotators.PartitionsAnnotator"/>
