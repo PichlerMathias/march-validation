@@ -5,11 +5,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.CustomReferenceConverter;
-import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.ResolvingConverter;
-import marchvalidation.dom.Dimension;
-import marchvalidation.dom.MarchConfigRoot;
 import marchvalidation.dom.Partition;
 import marchvalidation.dom.util.MarchConfigUtil;
 import org.jetbrains.annotations.NotNull;
@@ -17,8 +14,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.intellij.psi.ElementManipulators;
 
