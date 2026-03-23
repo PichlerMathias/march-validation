@@ -29,10 +29,7 @@ public class PartitionConverter extends ResolvingConverter<Partition> implements
         if (s == null || s.isEmpty()) {
             return null;
         }
-        return getVariants(context).stream()
-                .filter(p -> s.equals(p.getName().getStringValue()))
-                .findFirst()
-                .orElse(null);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).partitions.get(s);
     }
 
     @Override
@@ -42,11 +39,7 @@ public class PartitionConverter extends ResolvingConverter<Partition> implements
 
     @Override
     public @NotNull Collection<? extends Partition> getVariants(final ConvertContext context) {
-        return MarchConfigUtil.getRoot(context).getDimensionsWrapper().getDimensionList().stream()
-                .map(Dimension::getPartitionsElement)
-                .filter(Objects::nonNull)
-                .flatMap(element -> element.getPartitions().stream())
-                .collect(Collectors.toSet());
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).partitions.values();
     }
 
     @Override

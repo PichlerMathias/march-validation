@@ -19,15 +19,12 @@ public class DimensionConverter extends ResolvingConverter<Dimension> {
             return null;
         }
 
-        return getVariants(context).stream()
-                .filter(p -> s.equals(p.getName().getStringValue()))
-                .findFirst()
-                .orElse(null);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).dimensions.get(s);
     }
 
     @Override
     public @NotNull Collection<? extends Dimension> getVariants(final ConvertContext context) {
-        return MarchConfigUtil.getRoot(context).getDimensionsWrapper().getDimensionList();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).dimensions.values();
     }
 
     @Override

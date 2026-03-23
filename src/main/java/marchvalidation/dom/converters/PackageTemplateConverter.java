@@ -20,22 +20,12 @@ public class PackageTemplateConverter extends ResolvingConverter<PackageTemplate
             return null;
         }
 
-        return getVariants(context).stream()
-                .filter(t -> {
-                    final var templateName = t.getName().getValue();
-                    return s.equals(templateName);
-                })
-                .findFirst()
-                .orElse(null);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).templates.get(s);
     }
 
     @Override
     public @NotNull Collection<? extends PackageTemplate> getVariants(final ConvertContext context) {
-        final var root = MarchConfigUtil.getRoot(context);
-        if (root.getPackageTemplates() == null) {
-            return Collections.emptyList();
-        }
-        return root.getPackageTemplates().getPackageTemplates();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).templates.values();
     }
 
     @Override

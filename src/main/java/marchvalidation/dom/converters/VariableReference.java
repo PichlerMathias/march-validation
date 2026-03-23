@@ -24,21 +24,15 @@ public class VariableReference extends PsiReferenceBase<PsiElement> {
 
     @Override
     public boolean isSoft() {
-        return true;
+        return false;
     }
 
     @Override
     public @Nullable PsiElement resolve() {
-        final var root = MarchConfigUtil.getRoot(context);
-        final var dimension = root.getDimensionsWrapper().getDimensionList().stream()
-                .filter(d -> variableName.equals(d.getName().getStringValue()))
-                .map(DomElement::getXmlElement)
-                .findFirst()
-                .orElse(null);
 
-        if (dimension != null) {
-            return dimension;
-        }
+        final var root = MarchConfigUtil.getRoot(context);
+        PsiElement globalMatch = MarchConfigUtil.getCache(root).variables.get(variableName);
+        if (globalMatch != null) return globalMatch;
 
         final var currentDom = DomUtil.getDomElement(getElement());
         if (currentDom == null) {
@@ -72,8 +66,6 @@ public class VariableReference extends PsiReferenceBase<PsiElement> {
 
     @Override
     public Object @NotNull [] getVariants() {
-        return MarchConfigUtil.getRoot(context).getDimensionsWrapper().getDimensionList().stream()
-                .map(d -> d.getName().getStringValue())
-                .toArray();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).variables.keySet().toArray();
     }
 }
