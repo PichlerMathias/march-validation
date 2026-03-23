@@ -26,5 +26,11 @@
         <annotator
                 language="XML"
                 implementationClass="marchvalidation.dom.annotators.PartitionsAnnotator"/>
+        <annotator
+                language="XML"
+                implementationClass="marchvalidation.dom.annotators.PartitionMatchAnnotator"/>
+        <annotator
+                language="XML"
+                implementationClass="marchvalidation.dom.annotators.DimensionAncestryAnnotator"/>
     </extensions>
 </idea-plugin>
