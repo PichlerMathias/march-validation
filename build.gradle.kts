@@ -10,14 +10,27 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
+    id("org.jetbrains.grammarkit") version "2023.3.0.3"
+}
+
+grammarKit {
+    // Falls du spezifische Versionen erzwingen willst
+    jflexRelease.set("1.9.1")
+    grammarKitRelease.set("2022.3.2")
 }
 
 group = providers.gradleProperty("pluginGroup").get()
 version = providers.gradleProperty("pluginVersion").get()
 
-// Set the JVM language level used to build the project.
 kotlin {
+    // This ensures both Kotlin and Java use the same compatible version
     jvmToolchain(21)
+}
+
+tasks.withType<JavaCompile> {
+    // Explicitly force Java to match Kotlin's current capabilities
+    targetCompatibility = "21"
+    sourceCompatibility = "21"
 }
 
 // Configure project's dependencies
@@ -130,6 +143,7 @@ kover {
     }
 }
 
+
 tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
@@ -137,6 +151,32 @@ tasks {
 
     publishPlugin {
         dependsOn(patchChangelog)
+    }
+
+    withType<JavaCompile> {
+        dependsOn(generateLexer, generateParser)
+    }
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        dependsOn(generateLexer, generateParser)
+    }
+
+    generateParser {
+        sourceFile.set(file("src/main/resources/ArchRule.bnf"))
+        targetRootOutputDir.set(file("src/main/gen"))
+        pathToParser.set("marchvalidation/parser/ArchRuleParser.java")
+        pathToPsiRoot.set("marchvalidation/psi")
+    }
+
+    generateLexer {
+        dependsOn(generateParser)
+        sourceFile.set(file("src/main/resources/_ArchRuleLexer.flex"))
+        targetOutputDir.set(file("src/main/gen/marchvalidation/rules/"))
+        purgeOldFiles.set(true)
+    }
+
+    compileJava {
+        dependsOn(generateLexer)
     }
 }
 
@@ -166,4 +206,10 @@ checkstyle {
     configFile = file("${project.rootDir}/checkstyle.xml")
     isIgnoreFailures = false
     maxWarnings = 0
+}
+
+sourceSets {
+    main {
+        java.srcDirs("src/main/gen")
+    }
 }
