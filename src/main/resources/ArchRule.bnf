@@ -1,0 +1,43 @@
+{
+  parserClass="marchvalidation.parser.ArchRuleParser"
+  extendsClass="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  psiClassPrefix="Arch"
+  psiImplPackage="marchvalidation.psi.impl"
+  psiPackage="marchvalidation.psi"
+  elementTypeHolderClass="marchvalidation.psi.ArchRuleTypes"
+  elementTypeClass="marchvalidation.rules.ArchRuleElementType"
+  tokenTypeClass="marchvalidation.rules.ArchRuleTokenType"
+
+
+    tokens=[
+      AND='regexp:&&|AND|and'
+      OR='regexp:\|\||OR|or'
+      NOT='!'
+      EQUALS='=='
+      NOT_EQUALS='!='
+      IN='regexp:IN|in'
+      DOT='.'
+      PIPE='|'
+      OPEN_PAREN='('
+      CLOSE_PAREN=')'
+      NULL_TOKEN='NULL'
+      LITERAL='regexp:[a-zA-Z0-9_-]+'
+      WHITE_SPACE='regexp:\s+'
+    ]
+}
+
+root ::= expression
+expression ::= or_expr
+or_expr ::= and_expr (OR and_expr)*
+and_expr ::= primary_expr (AND primary_expr)*
+private primary_expr ::= NOT primary_expr | group_expr | comparison_wrap
+group_expr ::= OPEN_PAREN expression CLOSE_PAREN
+
+comparison_wrap ::= partition_expr (EQUALS | NOT_EQUALS) partition_expr
+                 | partition_expr IN LITERAL DOT OPEN_PAREN in_options CLOSE_PAREN
+
+
+in_options ::= LITERAL (PIPE LITERAL)*
+partition_expr ::= LITERAL DOT LITERAL
+                 | LITERAL
+                 | NULL_TOKEN

@@ -32,5 +32,15 @@
         <annotator
                 language="XML"
                 implementationClass="marchvalidation.dom.annotators.DimensionAncestryAnnotator"/>
+
+        <fileType name="ArchRule"
+                  implementationClass="marchvalidation.rules.ArchRuleFileType"
+                  fieldName="INSTANCE"
+                  language="ArchRule"
+                  extensions="arch"/>
+        <lang.parserDefinition language="ArchRule"
+                               implementationClass="marchvalidation.rules.RuleParserDefinition"/>
+
+        <multiHostInjector implementation="marchvalidation.injection.ArchRuleInjector"/>
     </extensions>
 </idea-plugin>
