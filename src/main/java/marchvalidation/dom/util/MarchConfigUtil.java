@@ -1,8 +1,10 @@
 package marchvalidation.dom.util;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomUtil;
 import marchvalidation.dom.Dimension;
@@ -29,14 +31,12 @@ public class MarchConfigUtil {
         return CachedValuesManager.getCachedValue(root.getXmlElement(), () -> {
             ConfigCache cache = new ConfigCache();
 
-            // 1. Index Dimensions & Variable Map
             for (var d : root.getDimensionsWrapper().getDimensionList()) {
                 String name = d.getName().getStringValue();
                 if (name != null) {
                     cache.dimensions.put(name, d);
                     cache.variables.put(name, d.getXmlElement());
 
-                    // 2. Index Partitions (linked to Dimensions)
                     if (d.getPartitionsElement() != null) {
                         for (var p : d.getPartitionsElement().getPartitions()) {
                             String pName = p.getName().getStringValue();
@@ -46,7 +46,6 @@ public class MarchConfigUtil {
                 }
             }
 
-            // 3. Index Package Templates
             if (root.getPackageTemplates() != null) {
                 for (var t : root.getPackageTemplates().getPackageTemplates()) {
                     String tName = t.getName().getStringValue();
@@ -56,5 +55,16 @@ public class MarchConfigUtil {
 
             return CachedValueProvider.Result.create(cache, root.getXmlElement());
         });
+    }
+
+    public static MarchConfigRoot getRoot(PsiElement element) {
+        PsiFile file = element.getContainingFile();
+        PsiFile hostFile = com.intellij.lang.injection.InjectedLanguageManager.getInstance(element.getProject()).getTopLevelFile(file);
+        if (hostFile instanceof XmlFile xmlFile) {
+            var fileElement = com.intellij.util.xml.DomManager.getDomManager(element.getProject())
+                    .getFileElement(xmlFile, MarchConfigRoot.class);
+            return fileElement != null ? fileElement.getRootElement() : null;
+        }
+        return null;
     }
 }
