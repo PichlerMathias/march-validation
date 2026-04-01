@@ -9,13 +9,13 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import marchvalidation.rules.ArchRuleLanguage;
+import marchvalidation.rules.MarchRuleDefinitionLanguage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-public class ArchRuleInjector implements MultiHostInjector {
+public class MarchRuleDefinitionInjector implements MultiHostInjector {
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         if (!(context instanceof XmlText)) {
@@ -32,7 +32,7 @@ public class ArchRuleInjector implements MultiHostInjector {
             return;
         }
 
-        registrar.startInjecting(ArchRuleLanguage.INSTANCE)
+        registrar.startInjecting(MarchRuleDefinitionLanguage.INSTANCE)
                 .addPlace(null, null, (PsiLanguageInjectionHost) context,
                         new TextRange(0, context.getTextLength()))
                 .doneInjecting();

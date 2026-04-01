@@ -5,16 +5,14 @@ import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.psi.FileViewProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class ArchRuleFile extends PsiFileBase {
-    public ArchRuleFile(@NotNull FileViewProvider viewProvider) {
-        // Verbindet die Datei mit deiner ArchRuleLanguage
-        super(viewProvider, ArchRuleLanguage.INSTANCE);
+public class MarchRuleDefinitionFile extends PsiFileBase {
+    public MarchRuleDefinitionFile(@NotNull FileViewProvider viewProvider) {
+        super(viewProvider, MarchRuleDefinitionLanguage.INSTANCE);
     }
 
     @Override
     public @NotNull FileType getFileType() {
-        // Hier musst du ArchRuleFileType.INSTANCE zurückgeben
-        return ArchRuleFileType.INSTANCE;
+        return MarchRuleDefinitionFileType.INSTANCE;
     }
 
     @Override

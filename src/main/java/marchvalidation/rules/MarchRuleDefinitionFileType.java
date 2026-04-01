@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.Icon;
 
-public final class ArchRuleFileType extends LanguageFileType {
-    public static final ArchRuleFileType INSTANCE = new ArchRuleFileType();
+public final class MarchRuleDefinitionFileType extends LanguageFileType {
+    public static final MarchRuleDefinitionFileType INSTANCE = new MarchRuleDefinitionFileType();
 
-    private ArchRuleFileType() {
-        super(ArchRuleLanguage.INSTANCE);
+    private MarchRuleDefinitionFileType() {
+        super(MarchRuleDefinitionLanguage.INSTANCE);
     }
 
     @NotNull

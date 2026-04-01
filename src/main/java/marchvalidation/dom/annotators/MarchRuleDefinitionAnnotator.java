@@ -9,26 +9,26 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomManager;
 import marchvalidation.dom.MarchConfigRoot;
 import marchvalidation.dom.util.MarchConfigUtil;
-import marchvalidation.psi.ArchComparisonWrap;
-import marchvalidation.psi.ArchPartitionExpr;
-import marchvalidation.psi.ArchRuleTypes;
+import marchvalidation.psi.MarchRuleDefinitionComparisonWrap;
+import marchvalidation.psi.MarchRuleDefinitionPartitionExpr;
+import marchvalidation.psi.MarchRuleDefinitionTypes;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ArchRuleAnnotator implements Annotator {
+public class MarchRuleDefinitionAnnotator implements Annotator {
 
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-        if (element instanceof ArchPartitionExpr expr) {
+        if (element instanceof MarchRuleDefinitionPartitionExpr expr) {
             validatePartitionExpr(expr, holder);
         }
-        else if (element instanceof ArchComparisonWrap wrap) {
+        else if (element instanceof MarchRuleDefinitionComparisonWrap wrap) {
             validateComparisonWrap(wrap, holder);
         }
     }
 
-    private void validatePartitionExpr(ArchPartitionExpr expr, AnnotationHolder holder) {
+    private void validatePartitionExpr(MarchRuleDefinitionPartitionExpr expr, AnnotationHolder holder) {
         final var literals = getLiteralsFromElement(expr);
         if (literals.isEmpty()) {
             return;
@@ -51,7 +51,7 @@ public class ArchRuleAnnotator implements Annotator {
         }
     }
 
-    private void validateComparisonWrap(ArchComparisonWrap wrap, AnnotationHolder holder) {
+    private void validateComparisonWrap(MarchRuleDefinitionComparisonWrap wrap, AnnotationHolder holder) {
         final var dimNode = wrap.getLiteral();
         if (dimNode == null) {
             return;
@@ -103,7 +103,7 @@ public class ArchRuleAnnotator implements Annotator {
 
     private List<PsiElement> getLiteralsFromElement(PsiElement element) {
         return PsiTreeUtil.findChildrenOfType(element, PsiElement.class).stream()
-                .filter(e -> e.getNode().getElementType() == ArchRuleTypes.LITERAL)
+                .filter(e -> e.getNode().getElementType() == MarchRuleDefinitionTypes.LITERAL)
                 .toList();
     }
 

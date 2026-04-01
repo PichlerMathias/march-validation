@@ -6,8 +6,8 @@ import com.intellij.psi.PsiReferenceBase;
 import com.jetbrains.cef.remote.thrift.annotation.Nullable;
 import marchvalidation.dom.util.MarchConfigUtil;
 
-public class ArchRuleSemanticReference extends PsiReferenceBase<PsiElement> {
-    public ArchRuleSemanticReference(PsiElement element) {
+public class MarchRuleDefinitionSemanticReference extends PsiReferenceBase<PsiElement> {
+    public MarchRuleDefinitionSemanticReference(PsiElement element) {
         super(element, new TextRange(0, element.getTextLength()));
     }
 

@@ -38,20 +38,20 @@
                 implementationClass="marchvalidation.dom.annotators.ArchRuleAnnotator"/>-->
         <annotator
                 language="ArchRule"
-                implementationClass="marchvalidation.dom.annotators.ArchRuleAnnotator"/>
+                implementationClass="marchvalidation.dom.annotators.MarchRuleDefinitionAnnotator"/>
 
         <fileType name="ArchRule"
-                  implementationClass="marchvalidation.rules.ArchRuleFileType"
+                  implementationClass="marchvalidation.rules.MarchRuleDefinitionFileType"
                   fieldName="INSTANCE"
                   language="ArchRule"
                   extensions="arch"/>
         <lang.parserDefinition language="ArchRule"
                                implementationClass="marchvalidation.rules.RuleParserDefinition"/>
 
-        <multiHostInjector implementation="marchvalidation.injection.ArchRuleInjector"/>
+        <multiHostInjector implementation="marchvalidation.injection.MarchRuleDefinitionInjector"/>
 
         <psi.referenceContributor language="ArchRule"
-                                  implementation="marchvalidation.dom.contributors.ArchRuleReferenceContributor"/>
+                                  implementation="marchvalidation.dom.contributors.MrchRuleDefinitionReferenceContributor"/>
 
     </extensions>
 </idea-plugin>

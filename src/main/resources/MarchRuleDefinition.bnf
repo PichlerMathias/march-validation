@@ -1,12 +1,12 @@
 {
-  parserClass="marchvalidation.parser.ArchRuleParser"
+  parserClass="marchvalidation.parser.MarchRuleDefinitionParser"
   extendsClass="com.intellij.extapi.psi.ASTWrapperPsiElement"
-  psiClassPrefix="Arch"
+  psiClassPrefix="MarchRuleDefinition"
   psiImplPackage="marchvalidation.psi.impl"
   psiPackage="marchvalidation.psi"
-  elementTypeHolderClass="marchvalidation.psi.ArchRuleTypes"
-  elementTypeClass="marchvalidation.rules.ArchRuleElementType"
-  tokenTypeClass="marchvalidation.rules.ArchRuleTokenType"
+  elementTypeHolderClass="marchvalidation.psi.MarchRuleDefinitionTypes"
+  elementTypeClass="marchvalidation.rules.MarchRuleDefinitionElementType"
+  tokenTypeClass="marchvalidation.rules.MarchRuleDefinitionTokenType"
 
 
     tokens=[

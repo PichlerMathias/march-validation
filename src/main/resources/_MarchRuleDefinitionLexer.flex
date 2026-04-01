@@ -5,18 +5,18 @@ import com.intellij.psi.tree.IElementType;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
-import static marchvalidation.psi.ArchRuleTypes.*;
+import static marchvalidation.psi.MarchRuleDefinitionTypes.*;
 
 %%
 
 %{
-  public _ArchRuleLexer() {
+  public _MarchRuleDefinitionLexer() {
     this((java.io.Reader)null);
   }
 %}
 
 %public
-%class _ArchRuleLexer
+%class _MarchRuleDefinitionLexer
 %implements FlexLexer
 %function advance
 %type IElementType

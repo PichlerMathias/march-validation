@@ -11,22 +11,21 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import marchvalidation.parser.ArchRuleParser;
-import marchvalidation.psi.ArchRuleTypes;
+import marchvalidation.parser.MarchRuleDefinitionParser;
+import marchvalidation.psi.MarchRuleDefinitionTypes;
 import org.jetbrains.annotations.NotNull;
 
 public class RuleParserDefinition implements ParserDefinition {
-    public static final IFileElementType FILE = new IFileElementType(ArchRuleLanguage.INSTANCE);
+    public static final IFileElementType FILE = new IFileElementType(MarchRuleDefinitionLanguage.INSTANCE);
 
     @Override
     public @NotNull Lexer createLexer(Project project) {
-        // Hier wird dein generierter JFlex-Lexer eingebunden
-        return new FlexAdapter(new marchvalidation.rules._ArchRuleLexer());
+        return new FlexAdapter(new marchvalidation.rules._MarchRuleDefinitionLexer());
     }
 
     @Override
     public @NotNull PsiParser createParser(Project project) {
-        return new ArchRuleParser();
+        return new MarchRuleDefinitionParser();
     }
 
     @Override
@@ -46,12 +45,11 @@ public class RuleParserDefinition implements ParserDefinition {
 
     @Override
     public @NotNull PsiElement createElement(ASTNode node) {
-        return ArchRuleTypes.Factory.createElement(node);
+        return MarchRuleDefinitionTypes.Factory.createElement(node);
     }
 
     @Override
     public @NotNull PsiFile createFile(@NotNull FileViewProvider viewProvider) {
-        // Du musst noch eine ArchRuleFile Klasse erstellen (siehe unten)
-        return new ArchRuleFile(viewProvider);
+        return new MarchRuleDefinitionFile(viewProvider);
     }
 }

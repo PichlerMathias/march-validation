@@ -162,15 +162,15 @@ tasks {
     }
 
     generateParser {
-        sourceFile.set(file("src/main/resources/ArchRule.bnf"))
+        sourceFile.set(file("src/main/resources/MarchRuleDefinition.bnf"))
         targetRootOutputDir.set(file("src/main/gen"))
-        pathToParser.set("marchvalidation/parser/ArchRuleParser.java")
+        pathToParser.set("marchvalidation/parser/MarchRuleDefinitionParser.java")
         pathToPsiRoot.set("marchvalidation/psi")
     }
 
     generateLexer {
         dependsOn(generateParser)
-        sourceFile.set(file("src/main/resources/_ArchRuleLexer.flex"))
+        sourceFile.set(file("src/main/resources/_MarchRuleDefinitionLexer.flex"))
         targetOutputDir.set(file("src/main/gen/marchvalidation/rules/"))
         purgeOldFiles.set(true)
     }
