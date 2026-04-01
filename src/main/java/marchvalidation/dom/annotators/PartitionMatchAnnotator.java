@@ -5,7 +5,6 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import marchvalidation.dom.Dimension;
@@ -21,25 +20,29 @@ public class PartitionMatchAnnotator implements Annotator {
             return;
         }
 
-        XmlAttributeValue valueElement = attribute.getValueElement();
-        String partitionValue = attribute.getValue();
+        final var valueElement = attribute.getValueElement();
+        final var partitionValue = attribute.getValue();
         if (valueElement == null || partitionValue == null || partitionValue.isEmpty()) {
             return;
         }
 
-        DomElement domElement = DomUtil.getDomElement(attribute.getParent());
-        if (domElement == null) return;
+        final var domElement = DomUtil.getDomElement(attribute.getParent());
+        if (domElement == null) {
+            return;
+        }
 
-        Dimension parentDimension = getDimensionFromParent(domElement);
+        final var parentDimension = getDimensionFromParent(domElement);
 
         if (parentDimension != null) {
-            String[] parts = partitionValue.split(";");
+            final var parts = partitionValue.split(";");
 
-            for (String p : parts) {
-                String trimmed = p.trim();
-                if (trimmed.isEmpty()) continue;
+            for (final var p : parts) {
+                final var trimmed = p.trim();
+                if (trimmed.isEmpty()) {
+                    continue;
+                }
 
-                boolean exists = parentDimension.getPartitionsElement().getPartitions().stream()
+                final var exists = parentDimension.getPartitionsElement().getPartitions().stream()
                         .anyMatch(def -> trimmed.equals(def.getName().getStringValue()));
 
                 if (!exists) {
@@ -54,7 +57,7 @@ public class PartitionMatchAnnotator implements Annotator {
     }
 
     private Dimension getDimensionFromParent(DomElement element) {
-        DomElement parent = DomUtil.getParentOfType(element, DomElement.class, true);
+        final var parent = DomUtil.getParentOfType(element, DomElement.class, true);
 
         if (parent instanceof Modularity mod) {
             return mod.getDimension().getValue();

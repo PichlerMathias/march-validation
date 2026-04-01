@@ -4,10 +4,8 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomManager;
-import marchvalidation.dom.Dimension;
 import marchvalidation.dom.MarchConfigRoot;
 import marchvalidation.dom.util.MarchConfigUtil;
 import marchvalidation.psi.ArchPartitionExpr;
@@ -25,27 +23,31 @@ public class ArchRuleAnnotator implements Annotator {
             return;
         }
 
-        List<PsiElement> literalNodes = getLiterals(expr);
+        final var literalNodes = getLiterals(expr);
         if (literalNodes.isEmpty()) {
             return;
         }
 
-        PsiFile file = element.getContainingFile();
-        PsiFile originalFile = file.getContext() != null ? file.getContext().getContainingFile() : file;
+        final var file = element.getContainingFile();
+        final var originalFile = file.getContext() != null ? file.getContext().getContainingFile() : file;
 
-        if (!(originalFile instanceof XmlFile xmlFile)) return;
+        if (!(originalFile instanceof XmlFile xmlFile)) {
+            return;
+        }
 
-        MarchConfigRoot root = DomManager.getDomManager(xmlFile.getProject())
+        final var root = DomManager.getDomManager(xmlFile.getProject())
                 .getFileElement(xmlFile, MarchConfigRoot.class)
                 .getRootElement();
-        var cache = MarchConfigUtil.getCache(root);
+        final var cache = MarchConfigUtil.getCache(root);
 
-        PsiElement dimNode = literalNodes.get(0);
-        String dimName = dimNode.getText();
+        final var dimNode = literalNodes.get(0);
+        final var dimName = dimNode.getText();
 
-        if (isKeyword(dimName)) return;
+        if (isKeyword(dimName)) {
+            return;
+        }
 
-        Dimension dim = cache.getDimensions().get(dimName);
+        final var dim = cache.getDimensions().get(dimName);
         if (dim == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Dimension '" + dimName + "' is not defined")
                     .range(dimNode)
@@ -54,10 +56,10 @@ public class ArchRuleAnnotator implements Annotator {
         }
 
         if (literalNodes.size() > 1) {
-            PsiElement partNode = literalNodes.get(1);
-            String partName = partNode.getText();
+            final var partNode = literalNodes.get(1);
+            final var partName = partNode.getText();
 
-            boolean exists = dim.getPartitionsElement().getPartitions().stream()
+            final var exists = dim.getPartitionsElement().getPartitions().stream()
                     .anyMatch(p -> partName.equals(p.getName().getStringValue()));
 
             if (!exists) {
@@ -69,8 +71,8 @@ public class ArchRuleAnnotator implements Annotator {
     }
 
     private List<PsiElement> getLiterals(ArchPartitionExpr expr) {
-        List<PsiElement> results = new ArrayList<>();
-        PsiElement child = expr.getFirstChild();
+        final var results = new ArrayList<PsiElement>();
+        var child = expr.getFirstChild();
         while (child != null) {
             if (child.getNode().getElementType() == ArchRuleTypes.LITERAL) {
                 results.add(child);

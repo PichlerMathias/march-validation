@@ -1,6 +1,5 @@
 package marchvalidation.dom.converters;
 
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -44,15 +43,12 @@ public class DimensionConverter extends ResolvingConverter<Dimension> implements
 
     @Override
     public PsiReference @NotNull [] createReferences(final GenericDomValue<Dimension> value, final PsiElement element, final ConvertContext context) {
-        final String s = value.getStringValue();
+        final var s = value.getStringValue();
         if (s == null || s.isEmpty()) {
             return PsiReference.EMPTY_ARRAY;
         }
 
-        // Use the same logic as PartitionConverter to create a reference for the whole string
-        final TextRange range = ElementManipulators.getValueTextRange(element);
-
-        // You can reuse your existing PartitionReference logic or create a generic DimensionReference
-        return new PsiReference[]{ new DimensionReference(element, range, s, context) };
+        final var range = ElementManipulators.getValueTextRange(element);
+        return new PsiReference[] {new DimensionReference(element, range, s, context)};
     }
 }

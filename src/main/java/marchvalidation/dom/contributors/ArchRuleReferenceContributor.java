@@ -19,8 +19,8 @@ public class ArchRuleReferenceContributor extends PsiReferenceContributor {
                 new PsiReferenceProvider() {
                     @Override
                     public PsiReference @NotNull [] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                        return new PsiReference[]{
-                                new ArchRuleSemanticReference(element)
+                        return new PsiReference[] {
+                            new ArchRuleSemanticReference(element)
                         };
                     }
                 }

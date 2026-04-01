@@ -1,16 +1,13 @@
 package marchvalidation.dom.converters;
 
 import com.intellij.util.xml.ConvertContext;
-import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.ResolvingConverter;
-import marchvalidation.dom.MarchConfigRoot;
 import marchvalidation.dom.PackageTemplate;
 import marchvalidation.dom.util.MarchConfigUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class PackageTemplateConverter extends ResolvingConverter<PackageTemplate> {
 

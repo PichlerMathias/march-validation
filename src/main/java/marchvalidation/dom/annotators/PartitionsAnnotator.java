@@ -8,7 +8,6 @@ import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class PartitionsAnnotator implements Annotator {
     @Override
@@ -17,14 +16,16 @@ public class PartitionsAnnotator implements Annotator {
             return;
         }
 
-        XmlTag[] partitionTags = parentTag.findSubTags("partition");
-        Set<String> seenNames = new HashSet<>();
+        final var partitionTags = parentTag.findSubTags("partition");
+        final var seenNames = new HashSet<>();
 
-        for (XmlTag partition : partitionTags) {
-            XmlTag nameTag = partition.findFirstSubTag("name");
-            if (nameTag == null) continue;
+        for (final var partition : partitionTags) {
+            final var nameTag = partition.findFirstSubTag("name");
+            if (nameTag == null) {
+                continue;
+            }
 
-            String nameValue = nameTag.getValue().getTrimmedText();
+            final var nameValue = nameTag.getValue().getTrimmedText();
 
             // Check if the name tag is empty
             if (nameValue.isEmpty()) {

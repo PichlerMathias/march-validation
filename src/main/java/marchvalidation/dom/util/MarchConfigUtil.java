@@ -1,7 +1,6 @@
 package marchvalidation.dom.util;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.xml.XmlFile;
@@ -45,18 +44,20 @@ public class MarchConfigUtil {
 
     public static ConfigCache getCache(MarchConfigRoot root) {
         return CachedValuesManager.getCachedValue(root.getXmlElement(), () -> {
-            ConfigCache cache = new ConfigCache();
+            final var cache = new ConfigCache();
 
             for (var d : root.getDimensionsWrapper().getDimensionList()) {
-                String name = d.getName().getStringValue();
+                final var name = d.getName().getStringValue();
                 if (name != null) {
                     cache.dimensions.put(name, d);
                     cache.variables.put(name, d.getXmlElement());
 
                     if (d.getPartitionsElement() != null) {
                         for (var p : d.getPartitionsElement().getPartitions()) {
-                            String pName = p.getName().getStringValue();
-                            if (pName != null) cache.partitions.put(pName, p);
+                            final var pName = p.getName().getStringValue();
+                            if (pName != null) {
+                                cache.partitions.put(pName, p);
+                            }
                         }
                     }
                 }
@@ -64,8 +65,10 @@ public class MarchConfigUtil {
 
             if (root.getPackageTemplates() != null) {
                 for (var t : root.getPackageTemplates().getPackageTemplates()) {
-                    String tName = t.getName().getStringValue();
-                    if (tName != null) cache.templates.put(tName, t);
+                    final var tName = t.getName().getStringValue();
+                    if (tName != null) {
+                        cache.templates.put(tName, t);
+                    }
                 }
             }
 
@@ -74,10 +77,10 @@ public class MarchConfigUtil {
     }
 
     public static MarchConfigRoot getRoot(PsiElement element) {
-        PsiFile file = element.getContainingFile();
-        PsiFile hostFile = com.intellij.lang.injection.InjectedLanguageManager.getInstance(element.getProject()).getTopLevelFile(file);
+        final var file = element.getContainingFile();
+        final var hostFile = com.intellij.lang.injection.InjectedLanguageManager.getInstance(element.getProject()).getTopLevelFile(file);
         if (hostFile instanceof XmlFile xmlFile) {
-            var fileElement = com.intellij.util.xml.DomManager.getDomManager(element.getProject())
+            final var fileElement = com.intellij.util.xml.DomManager.getDomManager(element.getProject())
                     .getFileElement(xmlFile, MarchConfigRoot.class);
             return fileElement != null ? fileElement.getRootElement() : null;
         }

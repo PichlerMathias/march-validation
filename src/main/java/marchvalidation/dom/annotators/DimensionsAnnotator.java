@@ -8,7 +8,6 @@ import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class DimensionsAnnotator implements Annotator {
     @Override
@@ -17,14 +16,16 @@ public class DimensionsAnnotator implements Annotator {
             return;
         }
 
-        XmlTag[] dimensionTags = parentTag.findSubTags("dimension");
-        Set<String> seenNames = new HashSet<>();
+        final var dimensionTags = parentTag.findSubTags("dimension");
+        final var seenNames = new HashSet<>();
 
-        for (XmlTag dimension : dimensionTags) {
-            XmlTag nameTag = dimension.findFirstSubTag("name");
-            if (nameTag == null) continue;
+        for (final var dimension : dimensionTags) {
+            final var nameTag = dimension.findFirstSubTag("name");
+            if (nameTag == null) {
+                continue;
+            }
 
-            String nameValue = nameTag.getValue().getTrimmedText();
+            final var nameValue = nameTag.getValue().getTrimmedText();
 
             // Check if the dimension name is empty
             if (nameValue.isEmpty()) {

@@ -4,7 +4,6 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.util.xml.ConvertContext;
-import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import marchvalidation.dom.Modularity;
@@ -31,8 +30,10 @@ public class VariableReference extends PsiReferenceBase<PsiElement> {
     public @Nullable PsiElement resolve() {
 
         final var root = MarchConfigUtil.getRoot(context);
-        PsiElement globalMatch = MarchConfigUtil.getCache(root).getVariables().get(variableName);
-        if (globalMatch != null) return globalMatch;
+        final var globalMatch = MarchConfigUtil.getCache(root).getVariables().get(variableName);
+        if (globalMatch != null) {
+            return globalMatch;
+        }
 
         final var currentDom = DomUtil.getDomElement(getElement());
         if (currentDom == null) {

@@ -4,7 +4,6 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceBase;
 import com.jetbrains.cef.remote.thrift.annotation.Nullable;
-import marchvalidation.dom.MarchConfigRoot;
 import marchvalidation.dom.util.MarchConfigUtil;
 
 public class ArchRuleSemanticReference extends PsiReferenceBase<PsiElement> {
@@ -14,13 +13,13 @@ public class ArchRuleSemanticReference extends PsiReferenceBase<PsiElement> {
 
     @Override
     public @Nullable PsiElement resolve() {
-        String name = getElement().getText();
-        MarchConfigRoot root = MarchConfigUtil.getRoot(getElement());
+        final var name = getElement().getText();
+        final var root = MarchConfigUtil.getRoot(getElement());
         if (root == null) {
             return null;
         }
 
-        var cache = MarchConfigUtil.getCache(root);
+        final var cache = MarchConfigUtil.getCache(root);
 
         if (cache.getDimensions().containsKey(name)) {
             return cache.getDimensions().get(name).getXmlElement();

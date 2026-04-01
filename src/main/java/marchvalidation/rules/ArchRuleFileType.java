@@ -2,7 +2,8 @@ package marchvalidation.rules;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
-import javax.swing.*;
+
+import javax.swing.Icon;
 
 public final class ArchRuleFileType extends LanguageFileType {
     public static final ArchRuleFileType INSTANCE = new ArchRuleFileType();
@@ -26,13 +27,11 @@ public final class ArchRuleFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDefaultExtension() {
-        // Wähle hier deine gewünschte Dateiendung
         return "arch";
     }
 
     @Override
     public Icon getIcon() {
-        // Hier kannst du ein Icon zurückgeben (null für Standard)
         return null;
     }
 }

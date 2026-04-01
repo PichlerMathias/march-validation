@@ -5,7 +5,6 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import marchvalidation.dom.Dimension;
@@ -21,14 +20,16 @@ public class DimensionAncestryAnnotator implements Annotator {
             return;
         }
 
-        XmlAttributeValue valueElement = attribute.getValueElement();
-        String dimensionValue = attribute.getValue();
+        final var valueElement = attribute.getValueElement();
+        final var dimensionValue = attribute.getValue();
         if (valueElement == null || dimensionValue == null || dimensionValue.isEmpty()) {
             return;
         }
 
-        DomElement domElement = DomUtil.getDomElement(attribute.getParent());
-        if (domElement == null) return;
+        final var domElement = DomUtil.getDomElement(attribute.getParent());
+        if (domElement == null) {
+            return;
+        }
 
         if (hasDuplicateInAncestry(domElement, dimensionValue)) {
             holder.newAnnotation(HighlightSeverity.ERROR,
@@ -39,16 +40,10 @@ public class DimensionAncestryAnnotator implements Annotator {
     }
 
     private boolean hasDuplicateInAncestry(DomElement current, String name) {
-        DomElement parent = current.getParent();
+        var parent = current.getParent();
 
         while (parent != null) {
-            String parentDimName = null;
-
-            if (parent instanceof Modularity mod) {
-                parentDimName = getDimName(mod.getDimension());
-            } else if (parent instanceof PackageModularity pkg) {
-                parentDimName = getDimName(pkg.getDimension());
-            }
+            final var parentDimName = getParentDimName(parent);
 
             if (name.equals(parentDimName)) {
                 return true;
@@ -56,6 +51,16 @@ public class DimensionAncestryAnnotator implements Annotator {
             parent = parent.getParent();
         }
         return false;
+    }
+
+    private String getParentDimName(DomElement parent) {
+        if (parent instanceof Modularity mod) {
+            return getDimName(mod.getDimension());
+        }
+        if (parent instanceof PackageModularity pkg) {
+            return getDimName(pkg.getDimension());
+        }
+        return null;
     }
 
     private String getDimName(com.intellij.util.xml.GenericDomValue<Dimension> dim) {
