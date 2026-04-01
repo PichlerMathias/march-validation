@@ -23,7 +23,7 @@ public class DimensionConverter extends ResolvingConverter<Dimension> implements
             return null;
         }
 
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).dimensions.get(s);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getDimensions().get(s);
     }
 
 
@@ -34,7 +34,7 @@ public class DimensionConverter extends ResolvingConverter<Dimension> implements
 
     @Override
     public @NotNull Collection<? extends Dimension> getVariants(final ConvertContext context) {
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).dimensions.values();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getDimensions().values();
     }
 
     @Override

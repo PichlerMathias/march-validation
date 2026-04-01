@@ -20,12 +20,12 @@ public class PackageTemplateConverter extends ResolvingConverter<PackageTemplate
             return null;
         }
 
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).templates.get(s);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getTemplates().get(s);
     }
 
     @Override
     public @NotNull Collection<? extends PackageTemplate> getVariants(final ConvertContext context) {
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).templates.values();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getTemplates().values();
     }
 
     @Override

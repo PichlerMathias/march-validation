@@ -45,7 +45,7 @@ public class ArchRuleAnnotator implements Annotator {
 
         if (isKeyword(dimName)) return;
 
-        Dimension dim = cache.dimensions.get(dimName);
+        Dimension dim = cache.getDimensions().get(dimName);
         if (dim == null) {
             holder.newAnnotation(HighlightSeverity.ERROR, "Dimension '" + dimName + "' is not defined")
                     .range(dimNode)

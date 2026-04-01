@@ -31,7 +31,7 @@ public class VariableReference extends PsiReferenceBase<PsiElement> {
     public @Nullable PsiElement resolve() {
 
         final var root = MarchConfigUtil.getRoot(context);
-        PsiElement globalMatch = MarchConfigUtil.getCache(root).variables.get(variableName);
+        PsiElement globalMatch = MarchConfigUtil.getCache(root).getVariables().get(variableName);
         if (globalMatch != null) return globalMatch;
 
         final var currentDom = DomUtil.getDomElement(getElement());
@@ -66,6 +66,6 @@ public class VariableReference extends PsiReferenceBase<PsiElement> {
 
     @Override
     public Object @NotNull [] getVariants() {
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).variables.keySet().toArray();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getVariables().keySet().toArray();
     }
 }

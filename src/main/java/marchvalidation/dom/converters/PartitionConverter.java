@@ -24,7 +24,7 @@ public class PartitionConverter extends ResolvingConverter<Partition> implements
         if (s == null || s.isEmpty()) {
             return null;
         }
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).partitions.get(s);
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getPartitions().get(s);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class PartitionConverter extends ResolvingConverter<Partition> implements
 
     @Override
     public @NotNull Collection<? extends Partition> getVariants(final ConvertContext context) {
-        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).partitions.values();
+        return MarchConfigUtil.getCache(MarchConfigUtil.getRoot(context)).getPartitions().values();
     }
 
     @Override

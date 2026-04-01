@@ -22,11 +22,11 @@ public class ArchRuleSemanticReference extends PsiReferenceBase<PsiElement> {
 
         var cache = MarchConfigUtil.getCache(root);
 
-        if (cache.dimensions.containsKey(name)) {
-            return cache.dimensions.get(name).getXmlElement();
+        if (cache.getDimensions().containsKey(name)) {
+            return cache.getDimensions().get(name).getXmlElement();
         }
-        if (cache.partitions.containsKey(name)) {
-            return cache.partitions.get(name).getXmlElement();
+        if (cache.getPartitions().containsKey(name)) {
+            return cache.getPartitions().get(name).getXmlElement();
         }
 
         if (name.equals("source") || name.equals("target")) {

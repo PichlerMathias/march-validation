@@ -206,6 +206,7 @@ checkstyle {
     configFile = file("${project.rootDir}/checkstyle.xml")
     isIgnoreFailures = false
     maxWarnings = 0
+    configProperties = mapOf("suppressionFile" to file("${project.rootDir}/suppressions.xml"))
 }
 
 sourceSets {

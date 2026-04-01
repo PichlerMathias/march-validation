@@ -19,15 +19,21 @@ public class ArchRuleInjector implements MultiHostInjector {
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement context) {
         // 1. Check if the context is an XML Text element
-        if (!(context instanceof XmlText)) return;
+        if (!(context instanceof XmlText)) {
+            return;
+        }
 
         // 2. Check if the parent is a <definition> tag
         XmlTag tag = PsiTreeUtil.getParentOfType(context, XmlTag.class);
-        if (tag == null || !"definition".equals(tag.getName())) return;
+        if (tag == null || !"definition".equals(tag.getName())) {
+            return;
+        }
 
         // 3. Optional: Verify the root tag is <march> to avoid false positives
         XmlFile xmlFile = (XmlFile) context.getContainingFile();
-        if (xmlFile.getRootTag() == null || !"march".equals(xmlFile.getRootTag().getName())) return;
+        if (xmlFile.getRootTag() == null || !"march".equals(xmlFile.getRootTag().getName())) {
+            return;
+        }
 
         // 4. Inject the language
         registrar.startInjecting(ArchRuleLanguage.INSTANCE)

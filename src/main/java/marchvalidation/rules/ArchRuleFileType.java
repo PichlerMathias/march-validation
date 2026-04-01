@@ -4,7 +4,7 @@ import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
-public class ArchRuleFileType extends LanguageFileType {
+public final class ArchRuleFileType extends LanguageFileType {
     public static final ArchRuleFileType INSTANCE = new ArchRuleFileType();
 
     private ArchRuleFileType() {

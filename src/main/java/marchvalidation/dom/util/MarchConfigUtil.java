@@ -21,10 +21,26 @@ public class MarchConfigUtil {
     }
 
     public static class ConfigCache {
-        public final Map<String, PsiElement> variables = new HashMap<>();
-        public final Map<String, Dimension> dimensions = new HashMap<>();
-        public final Map<String, PackageTemplate> templates = new HashMap<>();
-        public final Map<String, Partition> partitions = new HashMap<>();
+        private final Map<String, PsiElement> variables = new HashMap<>();
+        private final Map<String, Dimension> dimensions = new HashMap<>();
+        private final Map<String, PackageTemplate> templates = new HashMap<>();
+        private final Map<String, Partition> partitions = new HashMap<>();
+
+        public Map<String, PsiElement> getVariables() {
+            return variables;
+        }
+
+        public Map<String, Dimension> getDimensions() {
+            return dimensions;
+        }
+
+        public Map<String, PackageTemplate> getTemplates() {
+            return templates;
+        }
+
+        public Map<String, Partition> getPartitions() {
+            return partitions;
+        }
     }
 
     public static ConfigCache getCache(MarchConfigRoot root) {
