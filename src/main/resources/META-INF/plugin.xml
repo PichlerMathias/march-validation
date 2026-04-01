@@ -33,9 +33,6 @@
                 language="XML"
                 implementationClass="marchvalidation.dom.annotators.DimensionAncestryAnnotator"/>
 
-        <!--<annotator
-                language="XML"
-                implementationClass="marchvalidation.dom.annotators.ArchRuleAnnotator"/>-->
         <annotator
                 language="ArchRule"
                 implementationClass="marchvalidation.dom.annotators.MarchRuleDefinitionAnnotator"/>
